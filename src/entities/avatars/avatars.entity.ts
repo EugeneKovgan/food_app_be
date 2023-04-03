@@ -3,7 +3,7 @@ import { Column, Entity } from 'typeorm';
 import { BaseEntity } from '@entities/common';
 
 @Entity('avatar')
-export class Avatar extends BaseEntity {
+export class AvatarEntity extends BaseEntity {
   @Column({ unique: true })
   id: string;
 

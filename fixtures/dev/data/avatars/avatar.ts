@@ -1,6 +1,6 @@
-import { Avatar } from '@entities/avatars';
+import { AvatarEntity } from '@entities/avatars';
 
-export const AVATAR_FIXTURES: Partial<Avatar>[] = [
+export const AVATAR_FIXTURES: Partial<AvatarEntity>[] = [
   {
     id: 'c63e3ece-e06c-4c71-836e-515cb188e33b',
     avatarPath: 'photos/users/male1.jpg',

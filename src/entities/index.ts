@@ -1,6 +1,6 @@
 import { UserEntity } from './user/user.entity';
-import { Avatar } from './avatars';
+import { AvatarEntity } from './avatars';
 
-export const ENTITIES = [UserEntity, Avatar];
+export const ENTITIES = [UserEntity, AvatarEntity];
 
 export const SUBSCRIBERS = [];

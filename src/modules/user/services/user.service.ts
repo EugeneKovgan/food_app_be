@@ -67,11 +67,10 @@ export class UserService {
   }
 
   async getAllUsers(): Promise<UserEntity[]> {
-    return this._userRepository.find({
-      order: {
-        createdAt: 'asc',
-      },
-    });
+    const user = this._userRepository.createQueryBuilder('user').leftJoinAndSelect('user.avatar', 'avatar');
+    const users = await user.getMany();
+
+    return users;
   }
 
   async findById(inputId: string): Promise<UserEntity> {
