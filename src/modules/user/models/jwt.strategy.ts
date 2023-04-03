@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnprocessableEntityException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 
 import { Config } from '@core/config';
 
 import { UserService } from '../services';
+import { JwtResponseInterface } from './jwt-response.interface';
 
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
@@ -17,7 +18,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: any) {
-    return { ...payload };
+  async validate(payload: JwtResponseInterface) {
+    const user = await this._userService.findById(payload.id);
+
+    if (!user) {
+      throw new UnprocessableEntityException('Something wrong with token, ya-ha-ha');
+    }
+
+    return {
+      user,
+    };
   }
 }

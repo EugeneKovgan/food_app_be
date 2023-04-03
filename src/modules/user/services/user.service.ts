@@ -5,7 +5,16 @@ import { Repository } from 'typeorm';
 
 import { UserEntity } from '@entities/user';
 
-import { CreateUserDto } from '../models';
+import {
+  ApiAuthResponseModel,
+  CreateUserDto,
+  JwtResponseInterface,
+  LoginUserDto,
+  UserResponseInterface,
+  UserUpdateDto,
+} from '../models';
+
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -35,14 +44,68 @@ export class UserService {
     return await this._userRepository.save(newUser);
   }
 
-  buildUserResponse(user: any): any {
+  async login(loginUserDto: LoginUserDto): Promise<ApiAuthResponseModel> {
+    const user = await this._userRepository
+      .createQueryBuilder('user')
+      .select(['user.id', 'user.email', 'user.password'])
+      .where('user.email = :email', { email: loginUserDto.email })
+      .getOne();
+
+    if (!user) {
+      throw new UnprocessableEntityException(`User doesn't exist`);
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(loginUserDto.password, user.password);
+
+    if (!isPasswordCorrect) {
+      throw new UnprocessableEntityException(`Check your password`);
+    }
+
+    delete user.password;
+
+    return this.buildTokenResponse(user);
+  }
+
+  async getAllUsers(): Promise<UserEntity[]> {
+    return this._userRepository.find({
+      order: {
+        createdAt: 'asc',
+      },
+    });
+  }
+
+  async findById(inputId: string): Promise<UserEntity> {
+    const user = this._userRepository
+      .createQueryBuilder('user')
+      .select(['user.id'])
+      .where('user.id = :id', { id: inputId })
+      .getOne();
+
+    return user;
+  }
+
+  async updateUser(currentUserId: string, userUpdateDto: UserUpdateDto): Promise<UserEntity> {
+    const user = await this.findById(currentUserId);
+
+    Object.assign(user, userUpdateDto);
+
+    return await this._userRepository.save(user);
+  }
+
+  buildTokenResponse(user: any): ApiAuthResponseModel {
+    return {
+      token: this._generateJwt(user),
+    };
+  }
+
+  buildUserResponse(user: any): UserResponseInterface {
     return {
       user: { ...user, token: this._generateJwt(user) },
     };
   }
 
   private _generateJwt(user: UserEntity): string {
-    const payload: any = {
+    const payload: JwtResponseInterface = {
       id: user.id,
       email: user.email,
       userName: user.userName,
