@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/typedef */
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
+import { Avatar } from '@entities/avatars';
 import { BaseEntity } from '@entities/common';
 
 import { Config } from '../../core/config/config';
@@ -31,10 +32,11 @@ export class UserEntity extends BaseEntity {
   @Column({ nullable: true, default: null })
   address: string;
 
-  @Column({ nullable: true, default: null })
-  avatar: string;
+  @OneToOne(() => Avatar, (avatar) => avatar.id)
+  @JoinColumn()
+  avatar: Avatar;
 
-  @Column('simple-array')
+  @Column('simple-array', { nullable: true, default: null })
   cardNumber: string[];
 
   @Column({ select: false })
