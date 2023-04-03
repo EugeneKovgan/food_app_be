@@ -77,4 +77,16 @@ export class Config {
       migrationsTableName: 'Migrations',
     };
   }
+
+  get hashSaltFroBcrypt(): number {
+    return Number(this._env.HASH_SALT);
+  }
+
+  get passwordForBcrypt(): string {
+    return this._env.BCRYPT_PASSWORD;
+  }
+
+  get hashKeyForJwtToken(): string {
+    return this._env.JWT_SECRET;
+  }
 }

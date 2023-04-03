@@ -1,1 +1,3 @@
-export const DEV_LOADERS = [];
+import { UsersLoader } from './users';
+
+export const DEV_LOADERS = [UsersLoader];
