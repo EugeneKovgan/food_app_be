@@ -11,7 +11,7 @@ export class AvatarService {
     private _avatarRepository: Repository<AvatarEntity>,
   ) {}
 
-  async getAvatars(): Promise<AvatarEntity[]> {
+  async getAvatars(): Promise<any> {
     const avatars = await this._avatarRepository
       .createQueryBuilder('avatar')
       .select(['avatar.id', 'avatar.avatarPath']);
