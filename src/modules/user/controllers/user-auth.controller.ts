@@ -26,6 +26,8 @@ export class UserAuthController {
   @IsAuthenticated()
   @Get('profile')
   async currentUser(@Request() req: UserResponseInterface) {
+    console.log(req.user.id);
+
     return req.user;
   }
 
