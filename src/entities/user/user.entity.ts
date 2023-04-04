@@ -4,8 +4,6 @@ import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { AvatarEntity } from '@entities/avatars';
 import { BaseEntity } from '@entities/common';
 
-import { Config } from '../../core/config/config';
-
 import * as bcrypt from 'bcrypt';
 
 @Entity('user')
@@ -44,6 +42,7 @@ export class UserEntity extends BaseEntity {
 
   @BeforeInsert()
   async hashPassword() {
-    this.password = await bcrypt.hash(this.password, Config.get.hashSaltFroBcrypt);
+    // this.password = await bcrypt.hash(this.password, Config.get.hashSaltFroBcrypt); //circular dependency entities/index.ts > entities/user/user.entity.ts > core/config/config.ts
+    this.password = await bcrypt.hash(this.password, 5);
   }
 }
