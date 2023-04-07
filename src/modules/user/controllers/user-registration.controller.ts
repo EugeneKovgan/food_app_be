@@ -1,16 +1,15 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Post } from '@nestjs/common';
 
+import { UserRegistrationController as Controller } from '../decorators';
 import { ApiAuthResponseModel, CreateUserDto } from '../models';
 import { UserService } from '../services';
 
-@Controller('registration')
+@Controller()
 export class UserRegistrationController {
   constructor(private readonly _userService: UserService) {}
 
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto): Promise<ApiAuthResponseModel> {
-    const user = await this._userService.createUser(createUserDto);
-
-    return this._userService.buildTokenResponse(user);
+    return this._userService.createUser(createUserDto);
   }
 }

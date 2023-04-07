@@ -1,50 +1,40 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+// import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from '@entities/user';
+import { UserShareService } from '@shared/user-shared';
 
-import {
-  ApiAuthResponseModel,
-  CreateUserDto,
-  JwtResponseInterface,
-  LoginUserDto,
-  UserResponseInterface,
-  UserUpdateDto,
-} from '../models';
+import { ApiAuthResponseModel, CreateUserDto, LoginUserDto, UserUpdateDto } from '../models';
 
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
   constructor(
-    private readonly _jwtService: JwtService,
     @InjectRepository(UserEntity)
     private readonly _userRepository: Repository<UserEntity>,
+    private readonly _userShareService: UserShareService,
   ) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
-    const userByEmail = await this._userRepository.findOneBy({
-      email: createUserDto.email,
+  async createUser(createUserDto: CreateUserDto): Promise<ApiAuthResponseModel> {
+    const existsUser = await this._userRepository.findOne({
+      where: [{ userName: createUserDto.userName }, { email: createUserDto.email }],
     });
 
-    const userByUserName = await this._userRepository.findOneBy({
-      userName: createUserDto.userName,
-    });
-
-    if (userByEmail || userByUserName) {
+    if (existsUser) {
       throw new UnprocessableEntityException('Email or user name are exist');
     }
 
-    const newUser = new UserEntity();
+    const user = this._userRepository.create(createUserDto);
 
-    Object.assign(newUser, createUserDto);
+    const createdUser = await this._userRepository.save(user);
 
-    return await this._userRepository.save(newUser);
+    return this._userShareService.buildTokenResponse(createdUser);
   }
 
-  async login(loginUserDto: LoginUserDto): Promise<ApiAuthResponseModel> {
+  async login(loginUserDto: LoginUserDto): Promise<any> {
     const user = await this._userRepository
       .createQueryBuilder('user')
       .select(['user.id', 'user.email', 'user.password'])
@@ -63,7 +53,7 @@ export class UserService {
 
     delete user.password;
 
-    return this.buildTokenResponse(user);
+    return this._userShareService.buildTokenResponse(user);
   }
 
   async getAllUsers(): Promise<UserEntity[]> {
@@ -89,27 +79,5 @@ export class UserService {
     Object.assign(user, userUpdateDto);
 
     return await this._userRepository.save(user);
-  }
-
-  buildTokenResponse(user: any): ApiAuthResponseModel {
-    return {
-      token: this._generateJwt(user),
-    };
-  }
-
-  buildUserResponse(user: any): UserResponseInterface {
-    return {
-      user: { ...user, token: this._generateJwt(user) },
-    };
-  }
-
-  private _generateJwt(user: UserEntity): string {
-    const payload: JwtResponseInterface = {
-      id: user.id,
-      email: user.email,
-      userName: user.userName,
-    };
-
-    return this._jwtService.sign(payload);
   }
 }

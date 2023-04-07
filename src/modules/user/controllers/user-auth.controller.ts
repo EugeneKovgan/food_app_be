@@ -2,15 +2,15 @@ import { Body, Get, Post, Put, Request } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 
 import { UserEntity } from '@entities/user';
-import { IsAuthenticated } from '@shared/user/decorators';
+import { IsAuthenticated, UserShareService } from '@shared/user-shared';
 
-import { UserAuthControllerDecorator as Controller } from '../decorators';
+import { UserAuthController as Controller } from '../decorators';
 import { ApiAuthResponseModel, LoginUserDto, UserResponseInterface, UserUpdateDto } from '../models';
 import { UserService } from '../services';
 
 @Controller()
 export class UserAuthController {
-  constructor(private readonly _userService: UserService) {}
+  constructor(private readonly _userService: UserService, private readonly _serShareService: UserShareService) {}
 
   @ApiResponse({ type: ApiAuthResponseModel })
   @Post('login')
@@ -40,6 +40,6 @@ export class UserAuthController {
     const currentUserId = req.user.id;
     const user = await this._userService.updateUser(currentUserId, userUpdateDto);
 
-    return this._userService.buildTokenResponse(user);
+    return this._serShareService.buildTokenResponse(user);
   }
 }
