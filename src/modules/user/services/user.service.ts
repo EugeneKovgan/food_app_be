@@ -63,18 +63,8 @@ export class UserService {
     return users;
   }
 
-  async findById(inputId: string): Promise<UserEntity> {
-    const user = this._userRepository
-      .createQueryBuilder('user')
-      .select(['user.id'])
-      .where('user.id = :id', { id: inputId })
-      .getOne();
-
-    return user;
-  }
-
   async updateUser(currentUserId: string, userUpdateDto: UserUpdateDto): Promise<UserEntity> {
-    const user = await this.findById(currentUserId);
+    const user = await this._userShareService.findById(currentUserId);
 
     Object.assign(user, userUpdateDto);
 

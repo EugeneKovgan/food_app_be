@@ -19,7 +19,7 @@ export class UserShareService {
   async findById(inputId: string): Promise<UserEntity> {
     const user = this._userRepository
       .createQueryBuilder('user')
-      .select(['user.id'])
+      .select(['user.id', 'user.email', 'user.userName'])
       .where('user.id = :id', { id: inputId })
       .getOne();
 
