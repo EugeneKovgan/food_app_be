@@ -20,6 +20,7 @@ export class UserShareService {
     const user = this._userRepository
       .createQueryBuilder('user')
       .select(['user.id', 'user.email', 'user.userName'])
+      .leftJoinAndSelect('user.avatar', 'avatar')
       .where('user.id = :id', { id: inputId })
       .getOne();
 

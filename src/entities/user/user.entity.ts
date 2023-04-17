@@ -37,6 +37,9 @@ export class UserEntity extends BaseEntity {
   @Column('simple-array', { nullable: true, default: null })
   cardNumber: string[];
 
+  @Column('simple-array', { nullable: true, default: null })
+  favoritesProducts: string[];
+
   @Column({ select: false })
   password: string;
 

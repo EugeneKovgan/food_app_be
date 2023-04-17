@@ -61,4 +61,21 @@ export const PRODUCTS_IMG_FIXTURES: Partial<ProductImgEntity>[] = [
     id: 'c537cab6-a867-4c63-8af1-8e1d15f77992',
     path: 'images/food/pork/pork-chops.jpg',
   },
+
+  {
+    id: 'ec833a94-e5de-4ba7-ab0b-dd8293fb64d2',
+    path: 'images/drinks/cola.jpg',
+  },
+  {
+    id: 'f0d3e7c5-9b34-4b2c-8d88-989ea714b3fd',
+    path: 'images/drinks/fanta.jpg',
+  },
+  {
+    id: 'd8e42496-af4c-47d4-8602-765d30010b79',
+    path: 'images/drinks/sprite.jpg',
+  },
+  {
+    id: '769a57d4-837a-4493-8b20-f723bd16e807',
+    path: 'images/drinks/water.jpg',
+  },
 ];

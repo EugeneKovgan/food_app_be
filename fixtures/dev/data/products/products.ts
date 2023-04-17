@@ -1,6 +1,7 @@
 import { DeepPartial } from 'typeorm';
 
 import { ProductEntity } from '@entities/product';
+import { FoodCategory } from '@models/enum';
 
 export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
   {
@@ -9,9 +10,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 9.5,
     productDescription:
       'Our most popular choice! A delicious mix of different meal with various ingredients like salmon, tomato, bean, potato and much more.',
-    productCategory: 'Spicy grilled fish',
+    productCategory: FoodCategory.fastFood,
     productCookingTime: 15,
-    productFavoritesCounter: 2,
     picture: { id: '475b04a4-cc26-4f08-aa43-ca8dc7483a3e' },
   },
   {
@@ -20,9 +20,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 8.5,
     productDescription:
       'Our most popular choice! A delicious mix of different meal with various ingredients like salmon, tomato, bean, potato and much more.',
-    productCategory: 'Spicy grilled fish',
+    productCategory: FoodCategory.spicy,
     productCookingTime: 25,
-    productFavoritesCounter: 2,
     picture: { id: '394db5cc-005f-45f4-b179-a7f6239039b3' },
   },
   {
@@ -31,9 +30,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 7.5,
     productDescription:
       'Our most popular choice! A delicious mix of different meal with various ingredients like salmon, tomato, bean, potato and much more.',
-    productCategory: 'Spicy grilled fish',
+    productCategory: FoodCategory.sour,
     productCookingTime: 35,
-    productFavoritesCounter: 2,
     picture: { id: 'd3144c68-84ac-4e27-86b1-6e625cad2b3e' },
   },
   {
@@ -42,9 +40,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 6.5,
     productDescription:
       'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English.',
-    productCategory: 'Spicy fried chicken',
+    productCategory: FoodCategory.fastFood,
     productCookingTime: 20,
-    productFavoritesCounter: 3,
     picture: { id: '431556fa-d0a4-4b8b-a4fe-be89bc499a98' },
   },
   {
@@ -53,9 +50,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 5.5,
     productDescription:
       'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English.',
-    productCategory: 'Spicy fried chicken',
+    productCategory: FoodCategory.spicy,
     productCookingTime: 30,
-    productFavoritesCounter: 3,
     picture: { id: '087527c5-12b9-4fef-b0d9-13a2cd1e7589' },
   },
   {
@@ -64,9 +60,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 3.5,
     productDescription:
       'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using , making it look like readable English.',
-    productCategory: 'Spicy fried chicken',
+    productCategory: FoodCategory.salty,
     productCookingTime: 15,
-    productFavoritesCounter: 3,
     picture: { id: 'de519f7a-a712-4390-9ad2-26b1b0184f25' },
   },
   {
@@ -75,9 +70,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 4.5,
     productDescription:
       'Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for will uncover many web sites still in their infancy.',
-    productCategory: 'Spicy fried noodle',
+    productCategory: FoodCategory.fastFood,
     productCookingTime: 15,
-    productFavoritesCounter: 0,
     picture: { id: 'feb9ae8f-e40d-4397-9982-5078a086f40e' },
   },
   {
@@ -86,9 +80,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 6.5,
     productDescription:
       'Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for will uncover many web sites still in their infancy.',
-    productCategory: 'Spicy fried noodle',
+    productCategory: FoodCategory.fastFood,
     productCookingTime: 25,
-    productFavoritesCounter: 0,
     picture: { id: '7c3fee6f-e6e9-42ff-9aee-bb34280b719a' },
   },
   {
@@ -97,9 +90,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 2.5,
     productDescription:
       'Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for will uncover many web sites still in their infancy.',
-    productCategory: 'Spicy fried noodle',
+    productCategory: FoodCategory.fastFood,
     productCookingTime: 15,
-    productFavoritesCounter: 0,
     picture: { id: 'e9db95a2-5be0-4e90-9995-1be3da9b32ba' },
   },
   {
@@ -108,9 +100,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 4.5,
     productDescription:
       'Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like',
-    productCategory: 'Spicy grilled rice',
+    productCategory: FoodCategory.fastFood,
     productCookingTime: 35,
-    productFavoritesCounter: 12,
     picture: { id: 'bee4c87a-0745-47e5-b05a-566a14144713' },
   },
   {
@@ -119,9 +110,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 4.5,
     productDescription:
       'Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like',
-    productCategory: 'Spicy grilled rice',
+    productCategory: FoodCategory.vegetarian,
     productCookingTime: 35,
-    productFavoritesCounter: 12,
     picture: { id: '53ecdcb5-8abb-413d-b6a2-6ec1fd6947ca' },
   },
   {
@@ -130,9 +120,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 4.5,
     productDescription:
       'Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like',
-    productCategory: 'Spicy grilled rice',
+    productCategory: FoodCategory.vegetarian,
     productCookingTime: 45,
-    productFavoritesCounter: 12,
     picture: { id: '4fb3c988-2ff3-4c18-b3e3-bc3b4bd78c25' },
   },
   {
@@ -141,9 +130,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 11.5,
     productDescription:
       'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-    productCategory: 'Spicy grilled Pork',
+    productCategory: FoodCategory.fastFood,
     productCookingTime: 15,
-    productFavoritesCounter: 7,
     picture: { id: '7542839a-e305-428e-b1c1-65ff6ea17943' },
   },
   {
@@ -152,9 +140,8 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 11.5,
     productDescription:
       'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-    productCategory: 'Spicy grilled Pork',
+    productCategory: FoodCategory.salty,
     productCookingTime: 25,
-    productFavoritesCounter: 7,
     picture: { id: '39a0f862-01a7-4230-8d82-07b3d5c0c33f' },
   },
   {
@@ -163,9 +150,45 @@ export const PRODUCTS_FIXTURES: DeepPartial<ProductEntity>[] = [
     productPrice: 11.5,
     productDescription:
       'There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour',
-    productCategory: 'Spicy grilled Pork',
+    productCategory: FoodCategory.spicy,
     productCookingTime: 45,
-    productFavoritesCounter: 7,
     picture: { id: 'c537cab6-a867-4c63-8af1-8e1d15f77992' },
+  },
+
+  {
+    id: '1e0477e5-40fb-417f-b7ee-e112c449bc52',
+    productName: 'Coca-Cola',
+    productPrice: 2.5,
+    productDescription: '0.5 L',
+    productCategory: FoodCategory.drink,
+    productCookingTime: 0,
+    picture: { id: 'ec833a94-e5de-4ba7-ab0b-dd8293fb64d2' },
+  },
+  {
+    id: 'a42910c9-048c-4429-ac8c-e6f454ecf442',
+    productName: 'Fanta',
+    productPrice: 2.5,
+    productDescription: '0.5 L',
+    productCategory: FoodCategory.drink,
+    productCookingTime: 0,
+    picture: { id: 'f0d3e7c5-9b34-4b2c-8d88-989ea714b3fd' },
+  },
+  {
+    id: '69db3484-d84e-45e6-81b9-4cf84cbff6e4',
+    productName: 'Sprite',
+    productPrice: 2.5,
+    productDescription: '0.5 L',
+    productCategory: FoodCategory.drink,
+    productCookingTime: 0,
+    picture: { id: 'd8e42496-af4c-47d4-8602-765d30010b79' },
+  },
+  {
+    id: '32595c6d-5dad-4998-bb3f-827b19c18ee5',
+    productName: 'Water',
+    productPrice: 1.5,
+    productDescription: '0.5 L',
+    productCategory: FoodCategory.drink,
+    productCookingTime: 0,
+    picture: { id: '769a57d4-837a-4493-8b20-f723bd16e807' },
   },
 ];
