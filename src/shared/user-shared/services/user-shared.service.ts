@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from '@entities/user';
-import { ApiAuthResponseModel, UserResponseInterface } from '@modules/user/models';
+import { ApiAuthResponseModel, UserResponseInterface, UserUpdateDto } from '@modules/user/models';
 
 import { JwtResponseInterface } from '../models';
 
@@ -19,10 +19,23 @@ export class UserShareService {
   async findById(inputId: string): Promise<UserEntity> {
     const user = this._userRepository
       .createQueryBuilder('user')
-      .select(['user.id', 'user.email', 'user.userName'])
+      .select([
+        'user.id',
+        'user.userId',
+        'user.email',
+        'user.userName',
+        'user.name',
+        'user.surname',
+        'user.phoneNumber',
+        'user.favoritesProducts',
+        'user.address',
+        'user.cardNumber',
+      ])
       .leftJoinAndSelect('user.avatar', 'avatar')
       .where('user.id = :id', { id: inputId })
       .getOne();
+
+    console.log(user);
 
     return user;
   }
@@ -39,6 +52,14 @@ export class UserShareService {
     };
   }
 
+  async update(id: string, { avatar, ...userData }: UserUpdateDto) {
+    await this._userRepository.update(id, { ...userData, avatar: { id: avatar.id } });
+  }
+
+  async remove(id: string) {
+    await this._userRepository.softDelete(id);
+  }
+
   generateJwt(user: UserEntity): string {
     const payload: JwtResponseInterface = {
       id: user.id,
@@ -47,5 +68,16 @@ export class UserShareService {
     };
 
     return this._jwtService.sign(payload);
+  }
+
+  private async _getLastUserId(repository: Repository<UserEntity>): Promise<string> {
+    const queryBuilder = repository
+      .createQueryBuilder('user')
+      .withDeleted()
+      .addOrderBy('user.createdAt', 'DESC')
+      .select(['user.userId']);
+    const { userId } = await queryBuilder.getOne();
+
+    return userId;
   }
 }

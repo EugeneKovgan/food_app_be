@@ -2,19 +2,22 @@
 import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
 import { AvatarEntity } from '@entities/avatars';
-import { BaseEntity } from '@entities/common';
+import { AddressEntity, BaseEntity } from '@entities/common';
 
 import * as bcrypt from 'bcrypt';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
+  @Column({ nullable: true, default: null, unique: true })
+  userId: string;
+
   @Column()
   userName: string;
 
   @Column({ nullable: true, default: null })
   name: string;
 
-  @Column({ nullable: true, default: null })
+  @Column({ nullable: true, default: '' })
   surname: string;
 
   @Column()
@@ -27,8 +30,8 @@ export class UserEntity extends BaseEntity {
   })
   phoneNumber: string;
 
-  @Column({ nullable: true, default: null })
-  address: string;
+  @Column('simple-json', { nullable: true, default: null })
+  address: AddressEntity;
 
   @OneToOne(() => AvatarEntity, (avatar) => avatar.id)
   @JoinColumn()

@@ -13,6 +13,9 @@ export class ProductEntity extends BaseEntity {
   @Column({ type: 'float', default: 0.0 })
   productPrice: number;
 
+  @Column({ type: 'float', default: 0.0 })
+  productRating: number;
+
   @Column({ nullable: true, default: null, length: 400 })
   productDescription: string;
 

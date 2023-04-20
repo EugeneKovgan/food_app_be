@@ -1,5 +1,4 @@
 import { Injectable, UnprocessableEntityException } from '@nestjs/common';
-// import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -63,11 +62,26 @@ export class UserService {
     return users;
   }
 
-  async updateUser(currentUserId: string, userUpdateDto: UserUpdateDto): Promise<UserEntity> {
-    const user = await this._userShareService.findById(currentUserId);
+  // async updateUser(currentUserId: string, userUpdateDto: UserUpdateDto): Promise<UserEntity> {
+  //   const user = await this._userShareService.findById(currentUserId);
 
-    Object.assign(user, userUpdateDto);
+  //   Object.assign(user, userUpdateDto);
 
-    return await this._userRepository.save(user);
+  //   return await this._userRepository.save(user);
+  // }
+
+  async updateUser(id: string, user: UserUpdateDto) {
+    return this._userShareService.update(id, user);
+  }
+
+  private async _getLastUserId(repository: Repository<UserEntity>): Promise<string> {
+    const queryBuilder = repository
+      .createQueryBuilder('user')
+      .withDeleted()
+      .addOrderBy('user.createdAt', 'DESC')
+      .select(['user.userId']);
+    const { userId } = await queryBuilder.getOne();
+
+    return userId;
   }
 }
