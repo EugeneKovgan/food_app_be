@@ -6,7 +6,7 @@ import { DEFAULT_PASSWORD } from '@fixtures/models';
 export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   {
     id: '53ecdcb5-8abb-413d-b6a2-6ec1fd6947ca',
-    userId: '10000001',
+    userId: '1',
     userName: 'Bret',
     name: 'Leanne',
     surname: 'Graham',
@@ -28,7 +28,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: '4fb3c988-2ff3-4c18-b3e3-bc3b4bd78c25',
-    userId: '10000002',
+    userId: '2',
     userName: 'Antonette',
     name: 'Ervin',
     surname: 'Howell',
@@ -44,7 +44,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: '7542839a-e305-428e-b1c1-65ff6ea17943',
-    userId: '10000003',
+    userId: '3',
     userName: 'Samantha',
     name: 'Clementine',
     surname: 'Bauch',
@@ -64,7 +64,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: '39a0f862-01a7-4230-8d82-07b3d5c0c33f',
-    userId: '10000004',
+    userId: '4',
     userName: 'Karianne',
     name: 'Patricia',
     surname: 'Lebsack',
@@ -80,7 +80,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: 'c2277a4f-9a7b-433e-9268-0aaf76775665',
-    userId: '10000005',
+    userId: '5',
     userName: 'Kamren',
     name: 'Chelsey',
     surname: 'Kamren',
@@ -96,7 +96,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: '52bccf2d-3669-4535-aa20-dd2a8af1a804',
-    userId: '10000006',
+    userId: '6',
     userName: 'Leopoldo_Corkery',
     name: 'Leopoldo',
     surname: 'Corkery',
@@ -112,7 +112,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: '0d5d7db9-3448-4673-9088-ca8d0761c87f',
-    userId: '10000007',
+    userId: '7',
     userName: 'Elwyn.Skiles',
     name: 'Kurtis',
     surname: 'Weissnat',
@@ -132,7 +132,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: '4e2b2c14-8305-454e-a08d-a9391055f2dc',
-    userId: '10000008',
+    userId: '8',
     userName: 'Maxime_Nienow',
     name: 'Nichola',
     surname: 'Runolfsdottir',
@@ -148,7 +148,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: '84ef1a6e-8cbb-411e-882c-edcff9a5a127',
-    userId: '10000009',
+    userId: '9',
     userName: 'Delphine',
     name: 'Glenna',
     surname: 'Reichert',
@@ -168,7 +168,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
   },
   {
     id: '4e7fada0-3ee3-48d2-a6d0-058e709944ad',
-    userId: '10000010',
+    userId: '10',
     userName: 'Moriah.Stanton',
     name: 'Clementina',
     surname: 'DuBuque',

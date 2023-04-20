@@ -31,30 +31,18 @@ export class UserAuthController {
     return req.user;
   }
 
-  @Delete('remove/:id')
+  @Delete('remove:id')
   async removeUser(@Param('id', ParseUUIDPipe) id: string) {
     console.log(id);
 
-    return this._serShareService.remove(id);
+    return this._userService.removeUser(id);
   }
-
-  // @IsAuthenticated()
-  // @Put('profile')
-  // async updateCurrentUser(
-  //   @Request() req: any,
-  //   @Body('user') userUpdateDto: UserUpdateDto,
-  // ): Promise<ApiAuthResponseModel> {
-  //   const currentUserId = req.user.id;
-  //   const user = await this._userService.updateUser(currentUserId, userUpdateDto);
-
-  //   return this._serShareService.buildTokenResponse(user);
-  // }
 
   @Patch('update:id')
   @ApiResponse({
     status: HttpStatus.OK,
   })
-  async update(@Param('id', ParseUUIDPipe) id: string, @Body() user: UserUpdateDto) {
+  async updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: UserUpdateDto) {
     return this._userService.updateUser(id, user);
   }
 }

@@ -26,9 +26,12 @@ export class UserService {
       throw new UnprocessableEntityException('Email or user name are exist');
     }
 
+    const lastUserId = await this._getLastUserId(this._userRepository);
+    const userId = `${+lastUserId + 1}`;
+
     const user = this._userRepository.create(createUserDto);
 
-    const createdUser = await this._userRepository.save(user);
+    const createdUser = await this._userRepository.save({ ...user, userId });
 
     return this._userShareService.buildTokenResponse(createdUser);
   }
@@ -62,16 +65,12 @@ export class UserService {
     return users;
   }
 
-  // async updateUser(currentUserId: string, userUpdateDto: UserUpdateDto): Promise<UserEntity> {
-  //   const user = await this._userShareService.findById(currentUserId);
+  async updateUser(id: string, { avatar, ...userData }: UserUpdateDto) {
+    await this._userRepository.update(id, { ...userData, avatar: { id: avatar.id } });
+  }
 
-  //   Object.assign(user, userUpdateDto);
-
-  //   return await this._userRepository.save(user);
-  // }
-
-  async updateUser(id: string, user: UserUpdateDto) {
-    return this._userShareService.update(id, user);
+  async removeUser(id: string) {
+    await this._userRepository.delete(id);
   }
 
   private async _getLastUserId(repository: Repository<UserEntity>): Promise<string> {

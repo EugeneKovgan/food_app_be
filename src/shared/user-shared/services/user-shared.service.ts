@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from '@entities/user';
-import { ApiAuthResponseModel, UserResponseInterface, UserUpdateDto } from '@modules/user/models';
+import { ApiAuthResponseModel, UserResponseInterface } from '@modules/user/models';
 
 import { JwtResponseInterface } from '../models';
 
@@ -52,14 +52,6 @@ export class UserShareService {
     };
   }
 
-  async update(id: string, { avatar, ...userData }: UserUpdateDto) {
-    await this._userRepository.update(id, { ...userData, avatar: { id: avatar.id } });
-  }
-
-  async remove(id: string) {
-    await this._userRepository.softDelete(id);
-  }
-
   generateJwt(user: UserEntity): string {
     const payload: JwtResponseInterface = {
       id: user.id,
@@ -68,16 +60,5 @@ export class UserShareService {
     };
 
     return this._jwtService.sign(payload);
-  }
-
-  private async _getLastUserId(repository: Repository<UserEntity>): Promise<string> {
-    const queryBuilder = repository
-      .createQueryBuilder('user')
-      .withDeleted()
-      .addOrderBy('user.createdAt', 'DESC')
-      .select(['user.userId']);
-    const { userId } = await queryBuilder.getOne();
-
-    return userId;
   }
 }

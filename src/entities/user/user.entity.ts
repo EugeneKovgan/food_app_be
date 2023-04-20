@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
-  @Column({ nullable: true, default: null, unique: true })
+  @Column({ unique: true })
   userId: string;
 
   @Column()
@@ -17,7 +17,7 @@ export class UserEntity extends BaseEntity {
   @Column({ nullable: true, default: null })
   name: string;
 
-  @Column({ nullable: true, default: '' })
+  @Column({ nullable: true, default: null })
   surname: string;
 
   @Column()
