@@ -1,16 +1,16 @@
-import { Body, Get, Post, Put, Request } from '@nestjs/common';
+import { Body, Delete, Get, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Request } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 
 import { UserEntity } from '@entities/user';
-import { IsAuthenticated } from '@shared/user/decorators';
+import { IsAuthenticated, UserShareService } from '@shared/user-shared';
 
-import { UserAuthControllerDecorator as Controller } from '../decorators';
+import { UserAuthController as Controller } from '../decorators';
 import { ApiAuthResponseModel, LoginUserDto, UserResponseInterface, UserUpdateDto } from '../models';
 import { UserService } from '../services';
 
 @Controller()
 export class UserAuthController {
-  constructor(private readonly _userService: UserService) {}
+  constructor(private readonly _userService: UserService, private readonly _serShareService: UserShareService) {}
 
   @ApiResponse({ type: ApiAuthResponseModel })
   @Post('login')
@@ -31,15 +31,18 @@ export class UserAuthController {
     return req.user;
   }
 
-  @IsAuthenticated()
-  @Put('profile')
-  async updateCurrentUser(
-    @Request() req: any,
-    @Body('user') userUpdateDto: UserUpdateDto,
-  ): Promise<ApiAuthResponseModel> {
-    const currentUserId = req.user.id;
-    const user = await this._userService.updateUser(currentUserId, userUpdateDto);
+  @Delete('remove/:id')
+  async removeUser(@Param('id', ParseUUIDPipe) id: string) {
+    console.log(id);
 
-    return this._userService.buildTokenResponse(user);
+    return this._userService.removeUser(id);
+  }
+
+  @Patch('update:id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+  })
+  async updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: UserUpdateDto) {
+    return this._userService.updateUser(id, user);
   }
 }

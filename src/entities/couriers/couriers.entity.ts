@@ -22,7 +22,7 @@ export class CouriersEntity extends BaseEntity {
   phoneNumber: string;
 
   @Column({ nullable: true, default: null })
-  address: string;
+  courierCity: string;
 
   @Column({ nullable: true, default: null })
   deliveryTime: string;
