@@ -31,7 +31,7 @@ export class UserAuthController {
     return req.user;
   }
 
-  @Delete('remove:id')
+  @Delete('remove/:id')
   async removeUser(@Param('id', ParseUUIDPipe) id: string) {
     console.log(id);
 

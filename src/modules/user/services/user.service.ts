@@ -33,6 +33,8 @@ export class UserService {
 
     const createdUser = await this._userRepository.save({ ...user, userId });
 
+    console.log({ createdUser });
+
     return this._userShareService.buildTokenResponse(createdUser);
   }
 
@@ -54,6 +56,8 @@ export class UserService {
     }
 
     delete user.password;
+
+    console.log(user);
 
     return this._userShareService.buildTokenResponse(user);
   }

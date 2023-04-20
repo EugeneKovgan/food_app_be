@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { UserEntity } from '@entities/user';
-import { ApiAuthResponseModel, UserResponseInterface } from '@modules/user/models';
+import { ApiAuthResponseModel } from '@modules/user/models';
 
 import { JwtResponseInterface } from '../models';
 
@@ -43,12 +43,6 @@ export class UserShareService {
   buildTokenResponse(user: any): ApiAuthResponseModel {
     return {
       token: this.generateJwt(user),
-    };
-  }
-
-  buildUserResponse(user: any): UserResponseInterface {
-    return {
-      user: { ...user, token: this.generateJwt(user) },
     };
   }
 
