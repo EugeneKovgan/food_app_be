@@ -21,8 +21,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(payload: JwtResponseInterface) {
     const user = await this._userShareService.findById(payload.id);
 
-    console.log('JwtResponseInterface' + payload.id);
-
     if (!user) {
       throw new UnprocessableEntityException('Something wrong with token');
     }

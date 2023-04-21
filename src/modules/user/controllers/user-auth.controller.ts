@@ -1,16 +1,17 @@
-import { Body, Delete, Get, HttpStatus, Param, ParseUUIDPipe, Patch, Post, Request } from '@nestjs/common';
+import { Body, Delete, Get, Param, ParseUUIDPipe, Post, Request } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 
 import { UserEntity } from '@entities/user';
-import { IsAuthenticated, UserShareService } from '@shared/user-shared';
+import { IsAuthenticated } from '@shared/user-shared';
 
 import { UserAuthController as Controller } from '../decorators';
-import { ApiAuthResponseModel, LoginUserDto, UserResponseInterface, UserUpdateDto } from '../models';
+import { ApiAuthResponseModel, UserResponseInterface } from '../models';
+import { LoginUserDto } from '../models/user-login.dto';
 import { UserService } from '../services';
 
 @Controller()
 export class UserAuthController {
-  constructor(private readonly _userService: UserService, private readonly _serShareService: UserShareService) {}
+  constructor(private readonly _userService: UserService) {}
 
   @ApiResponse({ type: ApiAuthResponseModel })
   @Post('login')
@@ -26,23 +27,23 @@ export class UserAuthController {
   @IsAuthenticated()
   @Get('profile')
   async currentUser(@Request() req: UserResponseInterface) {
-    console.log(req.user.id);
-
     return req.user;
   }
 
   @Delete('remove/:id')
   async removeUser(@Param('id', ParseUUIDPipe) id: string) {
-    console.log(id);
-
     return this._userService.removeUser(id);
   }
 
-  @Patch('update:id')
-  @ApiResponse({
-    status: HttpStatus.OK,
-  })
-  async updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: UserUpdateDto) {
-    return this._userService.updateUser(id, user);
-  }
+  // @Patch('update/:id')
+  // @ApiResponse({ type: ApiAuthResponseModel })
+  // async updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: UserUpdateDto) {
+  //   return this._userService.updateUser(id, user);
+  // }
+
+  // @Patch('profile/likes/:id')
+  // @ApiResponse({ type: ApiAuthResponseModel })
+  // async updateFavoriteList(@Param('id', ParseUUIDPipe) id: string, @Body() productId: UserFavoriteProductDto) {
+  //   return this._userService.updateFavoriteList(id, productId);
+  // }
 }
