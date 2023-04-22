@@ -5,7 +5,8 @@ import { Repository } from 'typeorm';
 import { UserEntity } from '@entities/user';
 import { UserShareService } from '@shared/user-shared';
 
-import { ApiAuthResponseModel, CreateUserDto, LoginUserDto, UserUpdateDto } from '../models';
+import { ApiAuthResponseModel, CreateUserDto, UserFavoriteProductDto, UserUpdateDto } from '../models';
+import { LoginUserDto } from '../models/user-login.dto';
 
 import * as bcrypt from 'bcrypt';
 
@@ -33,8 +34,6 @@ export class UserService {
 
     const createdUser = await this._userRepository.save({ ...user, userId });
 
-    console.log({ createdUser });
-
     return this._userShareService.buildTokenResponse(createdUser);
   }
 
@@ -57,8 +56,6 @@ export class UserService {
 
     delete user.password;
 
-    console.log(user);
-
     return this._userShareService.buildTokenResponse(user);
   }
 
@@ -71,6 +68,28 @@ export class UserService {
 
   async updateUser(id: string, { avatar, ...userData }: UserUpdateDto) {
     await this._userRepository.update(id, { ...userData, avatar: { id: avatar.id } });
+  }
+
+  async updateFavoriteList(id: string, { productId }: UserFavoriteProductDto) {
+    const user = await this._userShareService.findById(id);
+
+    console.log(`id: ${id}, productId: ${productId}`);
+
+    let updatedFavoritesProducts: string[] = [];
+
+    if (user.favoritesProducts === null) {
+      user.favoritesProducts = [];
+    }
+
+    if (user.favoritesProducts.includes(productId)) {
+      updatedFavoritesProducts = user.favoritesProducts.filter((item: string) => {
+        return item !== productId;
+      });
+    } else {
+      updatedFavoritesProducts = [...user.favoritesProducts, productId];
+    }
+
+    await this._userRepository.update(id, { ...user, favoritesProducts: updatedFavoritesProducts });
   }
 
   async removeUser(id: string) {

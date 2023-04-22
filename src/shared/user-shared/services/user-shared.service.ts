@@ -35,8 +35,6 @@ export class UserShareService {
       .where('user.id = :id', { id: inputId })
       .getOne();
 
-    console.log(user);
-
     return user;
   }
 

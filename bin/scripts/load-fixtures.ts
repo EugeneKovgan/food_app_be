@@ -29,9 +29,9 @@ class FixtureLoader {
 
       this.#logger.verbose('Fixtures successfully loaded.');
 
-      process.exit(0);
+      // process.exit(0);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
 
       this.#logger.error(
         `Failed loading fixtures. Error: message - ${e.message}, parameters - ${e.parameters?.join(', ')}.`,
