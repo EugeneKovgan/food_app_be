@@ -34,16 +34,4 @@ export class UserAuthController {
   async removeUser(@Param('id', ParseUUIDPipe) id: string) {
     return this._userService.removeUser(id);
   }
-
-  // @Patch('update/:id')
-  // @ApiResponse({ type: ApiAuthResponseModel })
-  // async updateUser(@Param('id', ParseUUIDPipe) id: string, @Body() user: UserUpdateDto) {
-  //   return this._userService.updateUser(id, user);
-  // }
-
-  // @Patch('profile/likes/:id')
-  // @ApiResponse({ type: ApiAuthResponseModel })
-  // async updateFavoriteList(@Param('id', ParseUUIDPipe) id: string, @Body() productId: UserFavoriteProductDto) {
-  //   return this._userService.updateFavoriteList(id, productId);
-  // }
 }
