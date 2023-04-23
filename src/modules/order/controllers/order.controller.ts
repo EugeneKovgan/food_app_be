@@ -1,7 +1,8 @@
-import { Body, Get, Post, Request } from '@nestjs/common';
+import { Body, Get, Param, ParseUUIDPipe, Post } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 
-import { ApiAuthResponseModel, UserResponseInterface } from '@modules/user/models';
+import { OrderEntity } from '@entities/order';
+import { ApiAuthResponseModel } from '@modules/user/models';
 
 import { Order_Controller as Controller } from '../decorators';
 import { OrderService } from '../services';
@@ -10,15 +11,20 @@ import { OrderService } from '../services';
 export class Order_Controller {
   constructor(private readonly _orderService: OrderService) {}
 
-  @Post('create')
+  @Post('create/:id')
   @ApiResponse({ type: ApiAuthResponseModel })
-  async createOrder(@Request() req: UserResponseInterface, @Body() data: any) {
-    return this._orderService.createOrder(req, { ...data });
+  async createOrder(@Param('id', ParseUUIDPipe) id: string, @Body() order: any): Promise<OrderEntity> {
+    return this._orderService.createOrder(id, order);
   }
 
-  @Get('get')
+  @Get('get/:id')
   @ApiResponse({ type: ApiAuthResponseModel })
-  async getOrders(@Request() req: UserResponseInterface): Promise<any> {
-    return this._orderService.getOrders(req);
+  async getOrders(@Param('id', ParseUUIDPipe) id: string): Promise<OrderEntity> {
+    return this._orderService.getOrders(id);
+  }
+
+  @Get()
+  async getAllOrders(): Promise<OrderEntity[]> {
+    return this._orderService.getAllOrders();
   }
 }
