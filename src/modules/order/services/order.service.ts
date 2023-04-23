@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { OrderProductListEntity } from '@entities/common';
 import { CouriersEntity } from '@entities/couriers';
 import { OrderEntity } from '@entities/order';
 import { UserEntity } from '@entities/user';
@@ -24,7 +25,7 @@ export class OrderService {
   async createOrder(id: string, { data }: any): Promise<OrderEntity> {
     const user = await this._userShareService.findById(id);
 
-    const productList: OrderProductListDto[] = await data.map((item: OrderProductListDto) => {
+    const productList: OrderProductListDto[] = await data.map((item: OrderProductListEntity) => {
       return {
         productName: item.productName,
         quantity: item.quantity,
@@ -40,20 +41,26 @@ export class OrderService {
 
     const chousedCouriers = couriers.filter((courier: CouriersEntity) => courier.courierCity === user.address.city);
 
+    const sortCouriersByTime = chousedCouriers.sort(
+      (a: CouriersEntity, b: CouriersEntity) => +a.deliveryTime - +b.deliveryTime,
+    );
+
     lastOrderId = `${+lastOrderId + 1}`;
 
     console.log(chousedCouriers);
 
     const newOrder = {
       orderId: lastOrderId,
-      userId: user.userId,
+      userId: user,
       address: user.address,
       phoneNumber: user.phoneNumber,
       data: currentData,
-      courierId: chousedCouriers[0].couriersId,
-      deliveryTime: chousedCouriers[0].deliveryTime,
+      courierId: sortCouriersByTime[0].couriersId,
+      deliveryTime: sortCouriersByTime[0].deliveryTime,
       orderInformation: productList,
     };
+
+    console.log(newOrder);
 
     const order = this._orderRepository.create(newOrder);
 
@@ -61,15 +68,9 @@ export class OrderService {
   }
 
   async getAllOrders(): Promise<OrderEntity[]> {
-    const order = this._orderRepository.createQueryBuilder('order');
+    const order = this._orderRepository.createQueryBuilder('order').leftJoinAndSelect('order.userId', 'user');
 
     return await order.getMany();
-  }
-
-  async getOrders(req: any): Promise<any> {
-    console.log(req);
-
-    return req;
   }
 
   private async _getLastOrderId(repository: Repository<OrderEntity>): Promise<string> {
@@ -83,15 +84,3 @@ export class OrderService {
     return orderId;
   }
 }
-
-// return await this._orderRepository
-//   .createQueryBuilder('order')
-//   .select(['order.orderId', 'order.userId', 'order.address', 'order.phoneNumber', 'order.data', 'order.orderInformation'])
-//   .where('order.orderId = :orderId', { orderId: user.userId })
-//   .where('order.userId = :userId', { userId: lastOrderId })
-//   .where('order.address = :address', { address: user.address })
-//   .where('order.data = :data', {
-//     data: currentData,
-//   })
-//   .where('order.orderInformation = :orderInformation', { orderInformation: productList })
-//   .getOne();

@@ -32,6 +32,7 @@ export class UserShareService {
         'user.cardNumber',
       ])
       .leftJoinAndSelect('user.avatar', 'avatar')
+      .leftJoinAndSelect('user.orderList', 'order')
       .where('user.id = :id', { id: inputId })
       .getOne();
 

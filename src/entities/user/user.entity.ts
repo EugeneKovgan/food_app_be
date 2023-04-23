@@ -44,9 +44,9 @@ export class UserEntity extends BaseEntity {
   @Column('simple-array', { nullable: true, default: null })
   favoritesProducts: string[];
 
-  @OneToMany(() => OrderEntity, (order) => order.orderId)
-  @JoinColumn()
-  orders: OrderEntity[];
+  @OneToMany(() => OrderEntity, (order: OrderEntity) => order.userId)
+  // @JoinColumn()
+  orderList: OrderEntity[];
 
   @Column({ select: false })
   password: string;

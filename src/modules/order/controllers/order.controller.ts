@@ -17,12 +17,6 @@ export class Order_Controller {
     return this._orderService.createOrder(id, order);
   }
 
-  @Get('get/:id')
-  @ApiResponse({ type: ApiAuthResponseModel })
-  async getOrders(@Param('id', ParseUUIDPipe) id: string): Promise<OrderEntity> {
-    return this._orderService.getOrders(id);
-  }
-
   @Get()
   async getAllOrders(): Promise<OrderEntity[]> {
     return this._orderService.getAllOrders();

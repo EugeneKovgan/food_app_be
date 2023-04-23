@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Migration1682249696422 implements MigrationInterface {
-  name = 'Migration1682249696422';
+export class Migration1682264494118 implements MigrationInterface {
+  name = 'Migration1682264494118';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -11,7 +11,7 @@ export class Migration1682249696422 implements MigrationInterface {
       `CREATE TABLE \`avatar\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`path\` varchar(255) NOT NULL, UNIQUE INDEX \`IDX_50e36da9d45349941038eaf149\` (\`id\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
-      `CREATE TABLE \`order\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`orderId\` varchar(255) NOT NULL, \`userId\` varchar(255) NOT NULL, \`data\` varchar(255) NOT NULL, \`orderInformation\` text NULL, \`courierId\` varchar(255) NOT NULL, \`deliveryTime\` varchar(255) NOT NULL, \`phoneNumber\` varchar(255) NOT NULL, \`address\` text NULL, UNIQUE INDEX \`IDX_b075313d4d7e1c12f1a6e6359e\` (\`orderId\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+      `CREATE TABLE \`order\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`orderId\` varchar(255) NOT NULL, \`data\` varchar(255) NOT NULL, \`orderInformation\` text NULL, \`courierId\` varchar(255) NOT NULL, \`deliveryTime\` varchar(255) NOT NULL, \`phoneNumber\` varchar(255) NOT NULL, \`address\` text NULL, \`userIdId\` varchar(36) NULL, UNIQUE INDEX \`IDX_b075313d4d7e1c12f1a6e6359e\` (\`orderId\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
     );
     await queryRunner.query(
       `CREATE TABLE \`user\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`userId\` varchar(255) NOT NULL, \`userName\` varchar(255) NOT NULL, \`name\` varchar(255) NULL, \`surname\` varchar(255) NULL, \`email\` varchar(255) NOT NULL, \`phoneNumber\` varchar(255) NULL, \`address\` text NULL, \`cardNumber\` text NULL, \`favoritesProducts\` text NULL, \`password\` varchar(255) NOT NULL, \`avatarId\` varchar(36) NULL, UNIQUE INDEX \`IDX_d72ea127f30e21753c9e229891\` (\`userId\`), UNIQUE INDEX \`IDX_f2578043e491921209f5dadd08\` (\`phoneNumber\`), UNIQUE INDEX \`REL_58f5c71eaab331645112cf8cfa\` (\`avatarId\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
@@ -24,6 +24,9 @@ export class Migration1682249696422 implements MigrationInterface {
     );
     await queryRunner.query(
       `CREATE TABLE \`product\` (\`id\` varchar(36) NOT NULL, \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), \`updatedAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6) ON UPDATE CURRENT_TIMESTAMP(6), \`productName\` varchar(255) NULL, \`productPrice\` float NOT NULL DEFAULT '0', \`productRating\` float NOT NULL DEFAULT '0', \`productDescription\` varchar(400) NULL, \`productCategory\` varchar(255) NULL, \`productCookingTime\` int NULL, \`pictureId\` varchar(36) NULL, UNIQUE INDEX \`REL_70f1dbdc3ac63d475ae8918836\` (\`pictureId\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
+    );
+    await queryRunner.query(
+      `ALTER TABLE \`order\` ADD CONSTRAINT \`FK_77a3765d815efc0006ede1f2cff\` FOREIGN KEY (\`userIdId\`) REFERENCES \`user\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE \`user\` ADD CONSTRAINT \`FK_58f5c71eaab331645112cf8cfa5\` FOREIGN KEY (\`avatarId\`) REFERENCES \`avatar\`(\`id\`) ON DELETE NO ACTION ON UPDATE NO ACTION`,
@@ -40,6 +43,7 @@ export class Migration1682249696422 implements MigrationInterface {
     await queryRunner.query(`ALTER TABLE \`product\` DROP FOREIGN KEY \`FK_70f1dbdc3ac63d475ae89188369\``);
     await queryRunner.query(`ALTER TABLE \`couriers\` DROP FOREIGN KEY \`FK_52be17e3ed171746c51cbb43efb\``);
     await queryRunner.query(`ALTER TABLE \`user\` DROP FOREIGN KEY \`FK_58f5c71eaab331645112cf8cfa5\``);
+    await queryRunner.query(`ALTER TABLE \`order\` DROP FOREIGN KEY \`FK_77a3765d815efc0006ede1f2cff\``);
     await queryRunner.query(`DROP INDEX \`REL_70f1dbdc3ac63d475ae8918836\` ON \`product\``);
     await queryRunner.query(`DROP TABLE \`product\``);
     await queryRunner.query(`DROP INDEX \`IDX_781244bae8efb92dfa0dd8851c\` ON \`product-img\``);

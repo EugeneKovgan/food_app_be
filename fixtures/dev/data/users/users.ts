@@ -24,7 +24,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
       'c6ccf9c4-95dc-43b0-bf88-8a9f9fc43ea6',
       '1e0477e5-40fb-417f-b7ee-e112c449bc52',
     ],
-    orders: [],
+    orderList: [],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -41,7 +41,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     },
     cardNumber: ['1234123412341234'],
     favoritesProducts: ['017902bc-d2c8-11ed-afa1-0242ac120002', 'd3144c68-84ac-4e27-86b1-6e625cad2b3e'],
-    orders: [],
+    orderList: [],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -62,7 +62,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
       'c6ccf9c4-95dc-43b0-bf88-8a9f9fc43ea6',
       '1e0477e5-40fb-417f-b7ee-e112c449bc52',
     ],
-    orders: [],
+    orderList: [],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -79,7 +79,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     },
     cardNumber: ['1234123412341234'],
     favoritesProducts: ['431556fa-d0a4-4b8b-a4fe-be89bc499a98', '1e0477e5-40fb-417f-b7ee-e112c449bc52'],
-    orders: [],
+    orderList: [{ id: '4c923e08-0952-456d-9ee3-4f56c0cc1977' }],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -96,7 +96,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     },
     cardNumber: ['1234123412341234'],
     favoritesProducts: ['017902bc-d2c8-11ed-afa1-0242ac120002', 'bb81141a-d2c8-11ed-afa1-0242ac120002'],
-    orders: [],
+    orderList: [],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -113,7 +113,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     },
     cardNumber: ['1234123412341234'],
     favoritesProducts: ['c6ccf9c4-95dc-43b0-bf88-8a9f9fc43ea6'],
-    orders: [],
+    orderList: [],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -134,7 +134,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
       '27dbc4b2-d2c8-11ed-afa1-0242ac120002',
       'bb798a4e-0e81-42d3-a994-fb9e4e4885e9',
     ],
-    orders: [],
+    orderList: [{ id: 'f3a86e09-c442-4aa2-8706-3f52c84fb112' }],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -151,7 +151,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
     },
     cardNumber: ['1234123412341234'],
     favoritesProducts: ['bb798a4e-0e81-42d3-a994-fb9e4e4885e9'],
-    orders: [],
+    orderList: [{ id: '73f7403c-edb6-4679-8397-e5567bb2cbcc' }],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -172,7 +172,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
       'bb81141a-d2c8-11ed-afa1-0242ac120002',
       '475b04a4-cc26-4f08-aa43-ca8dc7483a3e',
     ],
-    orders: [],
+    orderList: [],
     password: DEFAULT_PASSWORD,
   },
   {
@@ -194,7 +194,7 @@ export const USERS_FIXTURES: DeepPartial<UserEntity>[] = [
       '475b04a4-cc26-4f08-aa43-ca8dc7483a3e',
       '1e0477e5-40fb-417f-b7ee-e112c449bc52',
     ],
-    orders: [],
+    orderList: [],
     password: DEFAULT_PASSWORD,
   },
 ];

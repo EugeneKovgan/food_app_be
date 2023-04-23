@@ -30,6 +30,7 @@ export class UserAuthController {
     return req.user;
   }
 
+  @IsAuthenticated()
   @Delete('remove/:id')
   async removeUser(@Param('id', ParseUUIDPipe) id: string) {
     return this._userService.removeUser(id);

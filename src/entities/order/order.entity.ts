@@ -1,15 +1,17 @@
 /* eslint-disable @typescript-eslint/typedef */
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 import { AddressEntity, BaseEntity, OrderProductListEntity } from '@entities/common';
+import { UserEntity } from '@entities/user';
 
 @Entity('order')
 export class OrderEntity extends BaseEntity {
   @Column({ unique: true })
   orderId: string;
 
-  @Column()
-  userId: string;
+  @ManyToOne(() => UserEntity, (user: UserEntity) => user.orderList)
+  @JoinColumn()
+  userId: UserEntity;
 
   @Column()
   data: string;
