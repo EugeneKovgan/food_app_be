@@ -18,6 +18,12 @@ export class OrderEntity extends BaseEntity {
   orderInformation: OrderProductListEntity[];
 
   @Column()
+  courierId: string;
+
+  @Column()
+  deliveryTime: string;
+
+  @Column()
   phoneNumber: string;
 
   @Column('simple-json', { nullable: true, default: null })

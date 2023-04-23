@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
+import { CouriersEntity } from '@entities/couriers';
 import { OrderEntity } from '@entities/order';
 import { UserEntity } from '@entities/user';
 import { UserShareService } from '@shared/user-shared';
@@ -16,6 +17,8 @@ export class OrderService {
     private readonly _userShareService: UserShareService,
     @InjectRepository(OrderEntity)
     private readonly _orderRepository: Repository<OrderEntity>,
+    @InjectRepository(CouriersEntity)
+    private readonly _couriersRepository: Repository<CouriersEntity>,
   ) {}
 
   async createOrder(id: string, { data }: any): Promise<OrderEntity> {
@@ -28,36 +31,29 @@ export class OrderService {
       };
     });
 
-    const lastOrderId = await this._getLastOrderId(this._orderRepository);
+    let lastOrderId = await this._getLastOrderId(this._orderRepository);
     const currentData = new Date().toLocaleDateString('en-US', { hour: 'numeric', minute: 'numeric' });
+    const couriers = await this._couriersRepository
+      .createQueryBuilder('courier')
+      .select(['courier.couriersId', 'courier.courierCity', 'courier.deliveryTime'])
+      .getMany();
+
+    const chousedCouriers = couriers.filter((courier: CouriersEntity) => courier.courierCity === user.address.city);
+
+    lastOrderId = `${+lastOrderId + 1}`;
+
+    console.log(chousedCouriers);
 
     const newOrder = {
-      orderId: lastOrderId + 1,
+      orderId: lastOrderId,
       userId: user.userId,
       address: user.address,
       phoneNumber: user.phoneNumber,
       data: currentData,
+      courierId: chousedCouriers[0].couriersId,
+      deliveryTime: chousedCouriers[0].deliveryTime,
       orderInformation: productList,
     };
-
-    // const newOrder = await this._orderRepository
-    //   .createQueryBuilder('order')
-    //   .select([
-    //     'order.orderId',
-    //     'order.userId',
-    //     'order.address',
-    //     'order.phoneNumber',
-    //     'order.data',
-    //     'order.orderInformation',
-    //   ])
-    //   .where('order.orderId = :orderId', { orderId: lastOrderId })
-    //   .where('order.userId = :userId', { userId: user.userId })
-    //   .where('order.address = :address', { address: user.address })
-    //   .where('order.data = :data', {
-    //     data: currentData,
-    //   })
-    //   .where('order.orderInformation = :orderInformation', { orderInformation: productList })
-    //   .getOne();
 
     const order = this._orderRepository.create(newOrder);
 

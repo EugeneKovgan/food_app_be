@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/typedef */
-import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
 import { AvatarEntity } from '@entities/avatars';
 import { AddressEntity, BaseEntity } from '@entities/common';
+import { OrderEntity } from '@entities/order';
 
 import * as bcrypt from 'bcrypt';
 
@@ -42,6 +43,10 @@ export class UserEntity extends BaseEntity {
 
   @Column('simple-array', { nullable: true, default: null })
   favoritesProducts: string[];
+
+  @OneToMany(() => OrderEntity, (order) => order.orderId)
+  @JoinColumn()
+  orders: OrderEntity[];
 
   @Column({ select: false })
   password: string;
