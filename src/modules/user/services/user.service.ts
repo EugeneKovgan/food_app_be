@@ -73,8 +73,6 @@ export class UserService {
   async updateFavoriteList(id: string, { productId }: UserFavoriteProductDto) {
     const user = await this._userShareService.findById(id);
 
-    console.log(`id: ${id}, productId: ${productId}`);
-
     let updatedFavoritesProducts: string[] = [];
 
     if (user.favoritesProducts === null) {

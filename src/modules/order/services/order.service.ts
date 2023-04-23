@@ -47,8 +47,6 @@ export class OrderService {
 
     lastOrderId = `${+lastOrderId + 1}`;
 
-    console.log(chousedCouriers);
-
     const newOrder = {
       orderId: lastOrderId,
       userId: user,
@@ -59,8 +57,6 @@ export class OrderService {
       deliveryTime: sortCouriersByTime[0].deliveryTime,
       orderInformation: productList,
     };
-
-    console.log(newOrder);
 
     const order = this._orderRepository.create(newOrder);
 
